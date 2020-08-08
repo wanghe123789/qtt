@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>勤学下问系统</title>
+<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/vector.js"></script>
+</head>
+<body>
+
+<div id="container">
+	<div id="output">
+		<div class="containerT">
+			<h1>用户登录</h1>
+			<form class="form" id="entry_form">
+				<input type="text" placeholder="账号" id="entry_phone">
+				<input type="password" placeholder="密码" id="entry_password">
+				<button type="button" id="entry_btn">登录</button>
+				<div id="prompt" class="prompt"></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#entry_btn").click(function(){
+	   var phone = $("#entry_phone").val();
+	   var password = $("#entry_password").val();
+       $.ajax({    
+           type:"post",    
+           url:"{:url('Index/pdf/go')}",    
+           data:{'phone':phone,'password':password},//这里data传递过去的是序列化以后的字符串    
+           success:function(data){  
+	           	if(data.code == "1001"){
+	           		alert(data.msg);
+	           	}else{
+	           		alert(data.msg);
+	           		window.location.href = "{:url('Index/pdf/profile')}";
+	           	}  
+            }    
+        }); 
+    });
+ 
+    $(function(){
+        Victor("container", "output");   //登录背景函数
+        $("#entry_name").focus();
+        $(document).keydown(function(event){
+            if(event.keyCode==13){
+                $("#entry_btn").click();
+            }
+        });
+               
+    });
+</script>
+</body>
+</html>

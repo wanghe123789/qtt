@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ch">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="左右结构项目，属于大人员的社交工具">
+        <meta name="keywords" content="左右结构项目 社交 占座 ">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>勤学下问系统</title>
+        <link href="/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <link href="/public/static/css/style.css" rel="stylesheet">
+        <script src="/public/yonghu/js/jquery.min.js"></script>
+        <script src="/public/yonghu/js/bootstrap.min.js"></script>
+        <script>
+            $(function() {
+                $(".meun-item").click(function() {
+                    $(".meun-item").removeClass("meun-item-active");
+                    $(this).addClass("meun-item-active");
+                    var itmeObj = $(".meun-item").find("img");
+                    itmeObj.each(function() {
+                        var items = $(this).attr("src");
+                        items = items.replace("_grey.png", ".png");
+                        items = items.replace(".png", "_grey.png")
+                        $(this).attr("src", items);
+                    });
+                    var attrObj = $(this).find("img").attr("src");
+                    ;
+                    attrObj = attrObj.replace("_grey.png", ".png");
+                    $(this).find("img").attr("src", attrObj);
+                });
+                $("#topAD").click(function() {
+                    $("#topA").toggleClass(" glyphicon-triangle-right");
+                    $("#topA").toggleClass(" glyphicon-triangle-bottom");
+                });
+                $("#topBD").click(function() {
+                    $("#topB").toggleClass(" glyphicon-triangle-right");
+                    $("#topB").toggleClass(" glyphicon-triangle-bottom");
+                });
+                $("#topCD").click(function() {
+                    $("#topC").toggleClass(" glyphicon-triangle-right");
+                    $("#topC").toggleClass(" glyphicon-triangle-bottom");
+                });
+                $(".toggle-btn").click(function() {
+                    $("#leftMeun").toggleClass("show");
+                    $("#rightContent").toggleClass("pd0px");
+                })
+            })
+        </script>
+
+  
+    
+        <link rel="stylesheet" type="text/css" href="/public/yonghu/css/common.css" />
+        <link rel="stylesheet" type="text/css" href="/public/yonghu/css/bootstrap.min.css" />    
+    </head>
+
+    <body>
+            <!--用户管理模块-->
+            <div role="tabpanel" class="tab-pane" id="user">
+                <div class="check-div form-inline">
+                    <div class="col-xs-3">
+                        <button class="btn btn-yellow btn-xs" data-toggle="modal" data-target="#addUser">添加用户 </button>
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="text" class="form-control input-sm" placeholder="输入名称搜索" id="cont">
+                        <button class="btn btn-white btn-xs " id="select">查 询 </button>
+                        <button class="btn btn-danger btn-xs " id="out">导 出 </button>
+                    </div>
+                    <div class="col-lg-3 col-lg-offset-2 col-xs-4" style=" padding-right: 40px;text-align: right;">
+                        <label for="paixu">分类:&nbsp;</label>
+                        <select class=" form-control" id="tiaojian">
+                            <option value="">请选择</option> 
+                            <option value="2">普通用户</option>
+                            <option value="1">VIP用户</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="data-div">
+                    <div class="row tableHeader">
+                        <div class="col-xs-2 ">
+                            用户名
+                        </div>
+                        <div class="col-xs-2">
+                            分类
+                        </div>
+                        <div class="col-xs-2">
+                            电话
+                        </div>
+                        <div class="col-xs-2">
+                            邮箱
+                        </div>
+                        <div class="col-xs-2">
+                            操作
+                        </div>
+                    </div>
+                    <div class="tablebody" id="conts">
+                        {volist name="data" id="v"}
+                        <div class="row" id="qiao">
+                            <div class="col-xs-2 ">
+                               {$v.name}
+                            </div>
+                            <?php if($v['type'] == 2){?>
+                              <div class="col-xs-2">
+                                普通用户
+                              </div>
+                            <?php }else{?>
+                              <div class="col-xs-2">
+                               vip用户
+                              </div>
+                            <?php }?>                          
+                            <div class="col-xs-2">
+                               {$v.phone}
+                            </div>
+                            <div class="col-xs-2">
+                                {$v.emal}
+                            </div>
+                            <div class="col-xs-2">
+                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#reviseUser">修改</button>
+                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteUser">删除</button>
+                            </div>                     
+                        </div>
+                           {/volist}
+                     
+
+                    </div>
+
+                </div>
+                <!--弹出添加用户窗口-->
+                <div class="modal fade" id="addUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">添加用户</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form class="form-horizontal">
+                                       
+
+                                   
+                                        <div class="form-group ">
+                                            <label for="sName" class="col-xs-3 control-label">用户名：</label>
+                                            <div class="col-xs-8 ">
+                                                <input type="email" class="form-control input-sm duiqi" id="name" placeholder="">
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="sKnot" class="col-xs-3 control-label">分类：</label>
+                                            <div class="col-xs-8">
+                                                <select class=" form-control select-duiqi" id="type"> 
+
+                                                    <option value="2">普通用户</option>
+                                                    <option value="1">vip用户</option>
+                                                </select>
+                                            </div>
+                                        </div>                                    
+                                        <div class="form-group">
+                                            <label for="sKnot" class="col-xs-3 control-label">电话：</label>
+                                            <div class="col-xs-8">
+                                                <input type="" class="form-control input-sm duiqi" id="phone" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sOrd" class="col-xs-3 control-label">电子邮箱：</label>
+                                            <div class="col-xs-8">
+                                                <input type="" class="form-control input-sm duiqi" id="emal" placeholder="">
+                                            </div>
+                                        </div> 
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="button" class="btn btn-xs btn-green" id = "add">保 存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--弹出修改用户窗口-->
+                <div class="modal fade" id="reviseUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">修改用户</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form class="form-horizontal">
+                                        <div class="form-group ">
+                                            <label for="sName" class="col-xs-3 control-label">用户名：</label>
+                                            <div class="col-xs-8 ">
+                                                <input type="email" class="form-control input-sm duiqi" id="sName" placeholder="">
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="sKnot" class="col-xs-3 control-label">分类：</label>
+                                            <div class="col-xs-8">
+                                                <select class=" form-control select-duiqi">                            
+                                                    <option value="">普通用户</option>
+                                                    <option value="">vip用户</option>
+                                                </select>
+                                            </div>
+                                        </div>                                    
+                                        <div class="form-group">
+                                            <label for="sKnot" class="col-xs-3 control-label">电话：</label>
+                                            <div class="col-xs-8">
+                                                <input type="" class="form-control input-sm duiqi" id="sKnot" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sOrd" class="col-xs-3 control-label">电子邮箱：</label>
+                                            <div class="col-xs-8">
+                                                <input type="" class="form-control input-sm duiqi" id="sOrd" placeholder="">
+                                            </div>
+                                        </div>        
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="button" class="btn btn-xs btn-green">保 存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--弹出删除用户警告窗口-->
+                <div class="modal fade" id="deleteUser" role="dialog" aria-labelledby="gridSystemModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="gridSystemModalLabel">提示</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    确定要删除该用户？删除后不可恢复！
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>
+                                <button type="button" class="btn  btn-xs btn-danger">保 存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+</body>
+
+</html>
+<script>
+    //添加用户
+    $("#add").click(function(){
+       var name = $("#name").val();
+       var type = $("#type").val();
+       var phone = $("#phone").val();
+       var emal = $("#emal").val();
+       $.ajax({    
+           type:"post",    
+           url:"{:url('Index/pdf/add')}",    
+           data:{'phone':phone,'name':name,'type':type,'emal':emal},//这里data传递过去的是序列化以后的字符串    
+           success:function(data){  
+                if(data.code == "1001"){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                    window.location.href = "{:url('Index/pdf/index')}";
+                }  
+            }    
+        }); 
+    });
+    //查询
+    $("#select").click(function(){
+       var cont = $("#cont").val();
+       var type = $("#tiaojian").val();
+       $.ajax({    
+           type:"post",    
+           url:"{:url('Index/pdf/select')}",    
+           data:{'cont':cont,'type':type},//这里data传递过去的是序列化以后的字符串    
+           success:function(data){  
+                if(data.code == "1001"){
+                    alert(data.msg);
+                }else{                 
+                    str = '';
+                   for(i in data.data){
+
+                      str += "<div class='tablebody' id='conts'><div class='row'>";
+                      str += "<div class='col-xs-2'>"+data.data[i].name+"</div>";
+                      if(data.data[i].type == 2){
+                        str += "<div class='col-xs-2'>普通用户</div>";
+                      }else{
+                         str += "<div class='col-xs-2'>vip用户</div>";
+                      }
+                      str +="<div class='col-xs-2'>"+data.data[i].phone+"</div>";
+                      str +="<div class='col-xs-2'>"+data.data[i].emal+"</div>";
+                      str +="<div class='col-xs-2'><button class='btn btn-success btn-xs' data-toggle='modal' data-target='#reviseUser'>修改</button><button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#deleteUser'>删除</button></div></div></div>";
+                    
+                    }
+                    $("#conts").html(str);
+
+
+                    //window.location.href = "{:url('Index/pdf/index')}";
+                }  
+            }    
+        }); 
+    });
+    //导出
+       $("#out").click(function(){
+       var cont = $("#cont").val();
+       var type = $("#tiaojian").val();
+       $.ajax({    
+           type:"get",    
+           url:"{:url('Index/pdf/out')}",    
+           data:{'cont':cont,'type':type},//这里data传递过去的是序列化以后的字符串    
+           success:function(data){  
+            console.log(data.data);
+            var data = JSON.stringify(data.data);
+            //content: '{:url('main/editschool')}?id='+data.id,
+               window.location.href = "{:url('Index/pdf/not')}?name="+data;
+                //href = "javascript:void(0)";
+            }    
+        }); 
+    });
+ 
+
+
+
+
+</script>
